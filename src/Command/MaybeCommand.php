@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,6 +13,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class MaybeCommand extends Command
 {
     protected static $defaultName = 'app:maybe';
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+
+        parent::__construct(); // Since the parent Command class has its own constructor, we need to call it here
+    }
 
     protected function configure()
     {
@@ -46,6 +55,8 @@ class MaybeCommand extends Command
         if ($input->getOption('yell')) {
             $spell = strtoupper($spell);
         }
+
+        $this->logger->info('Casting spell ' .$spell);
 
         $io->success($spell);
 

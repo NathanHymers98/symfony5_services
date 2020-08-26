@@ -13,20 +13,20 @@ class MarkdownHelper
     private $markdownParser; // To do dependency injection, make properties, make a constructor with the objects you want to use passed to it then simply use those properties in the class
     private $cache;
     private $isDebug;
-    private $markdownLogger;
+    private $logger;
 
-    public function __construct(MarkdownParserInterface $markdownParser, CacheInterface $cache, bool $isDebug, LoggerInterface $markdownLogger) // This is how you would do dependency injection so that we can use objects in a service class
+    public function __construct(MarkdownParserInterface $markdownParser, CacheInterface $cache, bool $isDebug, LoggerInterface $mdLogger) // This is how you would do dependency injection so that we can use objects in a service class
     {
         $this->markdownParser = $markdownParser;
         $this->cache = $cache;
         $this->isDebug = $isDebug;
-        $this->logger = $markdownLogger;
+        $this->logger = $mdLogger;
     }
 
     public function parse(string $source): string
     {
         if (stripos($source, 'cat') !== false) {
-            $this->markdownLogger->info('Meow');
+            $this->logger->info('Meow');
         }
 
         if($this->isDebug) {

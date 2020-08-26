@@ -13,6 +13,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
             $isDebug: '%kernel.debug%'
+            Psr\Log\LoggerInterface $mdLogger: '@monolog.logger.markdown' # Fetching a non-autowireable service.
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -28,3 +29,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    Psr\Log\LoggerInterface $mdLogger: '@monolog.logger.markdown' # Creating an alias for the markdown logger service, so I can use variables to get hold of the service object.
+                                                                    # This is the same as above (under bind) the only difference is that this will show up in the autowiring list in the console
